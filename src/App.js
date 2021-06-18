@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Container } from "@material-ui/core";
+import HomePage from "./pages/HomePage";
+import RobotsIndex from "./pages/RobotsIndex";
+import ProjectsIndex from "./pages/ProjectsIndex";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Router>
+        <Route
+          path="/"
+          exact
+          render={() => <HomePage title={`RobotProjects Home Page`} />}
+        />
+        <Route path="/robots" exact component={RobotsIndex} />
+        <Route path="/projects" exact component={ProjectsIndex} />
+      </Router>
+    </Container>
   );
 }
 

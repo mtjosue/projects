@@ -1,0 +1,4 @@
+export const ROBOT_FETCH_ALL = "ROBOT_FETCH_ALL";
+export const ROBOT_CREATE = "ROBOT_CREATE";
+export const ROBOT_DELETE = "ROBOT_DELETE";
+export const ROBOT_UPDATE = "ROBOT_UPDATE";
