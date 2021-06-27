@@ -1,4 +1,5 @@
-export const ROBOT_FETCH_ALL = "ROBOT_FETCH_ALL";
+export const SET_ROBOTS = "SET_ROBOTS";
+export const SET_ASSIGNED_PROJECTS = "SET_ASSIGNED_PROJECTS";
 export const ROBOT_CREATE = "ROBOT_CREATE";
 export const ROBOT_DELETE = "ROBOT_DELETE";
 export const ROBOT_UPDATE = "ROBOT_UPDATE";

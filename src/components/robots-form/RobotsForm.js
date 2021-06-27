@@ -48,7 +48,7 @@ const RobotsForm = ({ open, handleClickClose, currentId, setCurrentId }) => {
     fuelType: "",
     fuelLevel: "",
     imageUrl: "",
-    assignedProjects: "",
+    assignedProjects: [],
   };
 
   const [robotData, setRobotData] = useState(initialState);
@@ -165,7 +165,7 @@ const RobotsForm = ({ open, handleClickClose, currentId, setCurrentId }) => {
           />
         </div>
 
-        <TextField
+        {/* <TextField
           margin="dense"
           id="assignedProjects"
           label="Assign Projects"
@@ -176,7 +176,7 @@ const RobotsForm = ({ open, handleClickClose, currentId, setCurrentId }) => {
             setRobotData({ ...robotData, assignedProjects: e.target.value });
             // console.log(robotData);
           }}
-        />
+        /> */}
 
         <DialogActions>
           <Button color="secondary" onClick={handleClickClose}>

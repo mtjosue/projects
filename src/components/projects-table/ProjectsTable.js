@@ -55,14 +55,23 @@ const useStyles = makeStyles((theme) => ({
   actionsPaper: {
     marginLeft: "-35px",
   },
+  robots: {
+    fontSize: "0.8rem",
+    fontWeight: "bold",
+    textAlign: "left",
+  },
 }));
 
-const ProjectsTable = ({ handleClickOpen, setCurrentId }) => {
+const ProjectsTable = ({
+  handleClickOpen,
+  setCurrentId,
+  handleTransferClickOpen,
+}) => {
   const classes = useStyles();
 
   const projects = useSelector(({ projects }) => projects.projects);
 
-  console.log(projects);
+  console.log("All the projects shown on the projectsTable : ", projects);
 
   const dispatch = useDispatch();
   const removeProject = (id) => {
@@ -116,6 +125,7 @@ const ProjectsTable = ({ handleClickOpen, setCurrentId }) => {
                         justify="center"
                         alignItems="center"
                         spacing={1}
+                        style={{ paddingLeft: "30px" }}
                       >
                         <Grid item container xs={4} md={12} lg={4}>
                           <Typography className={classes.completed}>
@@ -137,6 +147,11 @@ const ProjectsTable = ({ handleClickOpen, setCurrentId }) => {
                         <Grid item container xs={4} md={12} lg={4}>
                           <Typography className={classes.priority}>
                             Priority : {project.priority}
+                          </Typography>
+                        </Grid>
+                        <Grid item container xs={4} md={12} lg={4}>
+                          <Typography className={classes.robots}>
+                            Robots assigned : {project.assignedRobots.length}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -162,7 +177,14 @@ const ProjectsTable = ({ handleClickOpen, setCurrentId }) => {
                             spacing={0}
                           >
                             <Grid item>
-                              <IconButton color="primary">
+                              <IconButton
+                                color="primary"
+                                onClick={() => {
+                                  setCurrentId(project._id);
+                                  // console.log(robot._id);
+                                  handleTransferClickOpen();
+                                }}
+                              >
                                 <FolderSharedIcon />
                               </IconButton>
                             </Grid>

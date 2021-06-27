@@ -3,8 +3,19 @@ import { Container } from "@material-ui/core";
 import HomePage from "./pages/HomePage";
 import RobotsIndex from "./pages/RobotsIndex";
 import ProjectsIndex from "./pages/ProjectsIndex";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getRobots } from "./redux/actions/robotActions";
+import { getProjects } from "./redux/actions/projectActions";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRobots());
+    dispatch(getProjects());
+  }, [dispatch]);
+
   return (
     <Container>
       <Router>

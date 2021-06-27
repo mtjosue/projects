@@ -4,85 +4,66 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  TextField,
-  DialogActions,
+  // DialogActions,
   Button,
 } from "@material-ui/core";
 import {
   Grid,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
+  // ListItemIcon,
+  // ListItemText,
   Checkbox,
   Paper,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
-// import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRobot } from "../../redux/actions/robotActions";
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     margin: "auto",
-//   },
-//   paper: {
-//     width: 200,
-//     height: 230,
-//     overflow: "auto",
-//   },
-//   button: {
-//     margin: theme.spacing(0.5, 0),
-//   },
-// }));
-
-const RobotsTransferList = ({ open, handleTransferClickClose, currentId }) => {
-  // const classes = useStyles();
-
-  const [robot, setRobot] = useState({});
-
-  const robotSelected = useSelector(({ robots }) =>
-    currentId ? robots.robots.find((robot) => robot._id === currentId) : ""
-  );
-
-  const projects = useSelector(({ projects }) => projects.projects);
-
-  // console.log(projects);
-
-  const unselectedProjects = projects.map((project) => {
-    return {
-      ...project,
-      selected: false,
-    };
+const RobotsTransferList = ({
+  open,
+  handleTransferClickClose,
+  currentId,
+  setCurrentId,
+}) => {
+  const [remainingProjects, setRemainingProjects] = useState([]);
+  // extract selected robot from redux state
+  const selectedRobot = useSelector(({ robots }) => {
+    return robots.robots.find((robot) => robot._id === currentId);
   });
 
-  console.log(unselectedProjects);
+  const selectProjects = useSelector(({ projects }) => projects.projects);
 
-  const [items, setItems] = useState([...unselectedProjects]);
+  // we have a right and left side to our transfer list
 
-  console.log(items);
+  // RIGHT
+  // We have the assigned projects for the current robot.
 
-  useEffect(() => {
-    if (robotSelected) {
-      setRobot(robotSelected);
-    }
-  }, [robotSelected]);
+  // LEFT
+  // we have the remaining projects.
 
-  const generateMarkUp = (items) => {
+  const generateMarkUp = (projects) => {
     return (
       <Paper>
         <List>
-          {items.map((item) => (
-            <ListItem key={item._id}>
-              <Checkbox key={item._id} />
-              <span key={item._id}>{item.title}</span>
+          {projects.length < 1 ? (
+            <ListItem>
+              <span>No assigned Projects</span>
             </ListItem>
-          ))}
+          ) : (
+            projects.map((p) => (
+              <ListItem key={p._id}>
+                <Checkbox
+                  // onChange={() => handleCheckboxChange(p)}
+                  checked={p.selected}
+                />
+                <span>{p.title}</span>
+              </ListItem>
+            ))
+          )}
         </List>
       </Paper>
     );
   };
-
-  const leftSide = [];
-  const rightSide = [items];
 
   return (
     <Dialog
@@ -91,38 +72,54 @@ const RobotsTransferList = ({ open, handleTransferClickClose, currentId }) => {
       aria-labelledby="form-dialog-title"
       fullWidth
     >
-      <DialogTitle aria-labelledby="form-dialog-title">
+      <DialogTitle
+        aria-labelledby="form-dialog-title"
+        style={{ textAlign: "center" }}
+      >
         Robot - Project Assignment
       </DialogTitle>
-      <DialogContent style={{ height: "170px" }}>
-        <DialogContentText>
-          Assign projects to this robot from here.
-        </DialogContentText>
-        <Grid container>
-          <Grid item md={5} style={{ textAlign: "center", fontWeight: "bold" }}>
-            {robot.name}
-          </Grid>
-          <Grid item md={2}></Grid>
-          <Grid item md={5} style={{ textAlign: "center", fontWeight: "bold" }}>
-            Projects
-          </Grid>
+      <DialogContentText style={{ textAlign: "center" }}>
+        Assign projects to this robot from here.
+      </DialogContentText>
+      <Grid container>
+        <Grid item md={6} style={{ textAlign: "center", fontWeight: "bold" }}>
+          {selectedRobot && selectedRobot.name}
         </Grid>
+        {/* <Grid item md={0}></Grid> */}
+        <Grid item md={6} style={{ textAlign: "center", fontWeight: "bold" }}>
+          Projects
+        </Grid>
+      </Grid>
+      <DialogContent style={{ height: "500px" }}>
         <Grid container>
+          {/* Left side of the transfer list */}
           <Grid item md={5}>
-            {generateMarkUp(leftSide)}
+            {selectedRobot.assignedProjects &&
+              generateMarkUp(selectedRobot.assignedProjects)}
           </Grid>
           <Grid
-            style={{ marginTop: "25px" }}
+            style={{ marginTop: "160px" }}
             item
             container
             direction="column"
             md={2}
           >
-            <Button>{">"}</Button>
-            <Button>{"<"}</Button>
+            <Button
+              style={{ marginBottom: "35px" }}
+              // onClick={() => {} } dispatch an action and add the project to the assigned projects list. On the current robot.
+            >
+              {"<"}
+            </Button>
+            <Button
+            // onClick={() => }
+            // dipsatch an action and remove the project from the assigned projects list. on the current robot.
+            >
+              {">"}
+            </Button>
           </Grid>
+          {/* Right side of the transfer list */}
           <Grid item md={5}>
-            {generateMarkUp(rightSide)}
+            {generateMarkUp(selectProjects)}
           </Grid>
         </Grid>
       </DialogContent>

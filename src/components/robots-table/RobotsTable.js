@@ -98,7 +98,7 @@ const RobotsTable = ({
                       Fuel Level : {robot.fuelLevel}%
                     </div>
                     <div className={classes.detail}>
-                      Assigned Projects : {robot.assignedProjects}
+                      Assigned Projects : {robot.assignedProjects.length}
                     </div>
                   </div>
                   <div
@@ -113,7 +113,7 @@ const RobotsTable = ({
                         color="primary"
                         onClick={() => {
                           setCurrentId(robot._id);
-                          console.log(robot._id);
+                          // console.log(robot._id);
                           handleTransferClickOpen();
                         }}
                       >
@@ -124,7 +124,7 @@ const RobotsTable = ({
                         onClick={() => {
                           setCurrentId(robot._id);
                           handleClickOpen();
-                          console.log("on click event");
+                          // console.log("on click event");
                         }}
                       >
                         <EditIcon />
