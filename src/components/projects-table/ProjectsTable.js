@@ -6,12 +6,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Button } from "@material-ui/core";
 import FolderSharedIcon from "@material-ui/icons/FolderShared";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useDispatch } from "react-redux";
-import { deleteProject } from "../../redux/actions/projectActions";
+import {
+  changeCompleted,
+  deleteProject,
+} from "../../redux/actions/projectActions";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -78,11 +81,16 @@ const ProjectsTable = ({
     dispatch(deleteProject(id));
   };
 
+  const handleCompletedChange = (id) => {
+    //Update the project.completed// PICK UP HERE
+    dispatch(changeCompleted(id));
+  };
+
   return (
     <Container>
       <div className={classes.root}>
         <Grid container spacing={2}>
-          {projects.length >= 1 ? (
+          {projects.length !== 0 ? (
             projects.map((project) => {
               return (
                 <Grid
@@ -112,7 +120,7 @@ const ProjectsTable = ({
                         lg={4}
                       >
                         <Paper className={classes.titlePaper}>
-                          {project.title}
+                          {project.title ? project.title : "No Title"}
                         </Paper>
                       </Grid>
                       <Grid
@@ -128,31 +136,44 @@ const ProjectsTable = ({
                         style={{ paddingLeft: "30px" }}
                       >
                         <Grid item container xs={4} md={12} lg={4}>
-                          <Typography className={classes.completed}>
-                            Completed : {project.completed ? "Yes" : "No"}
+                          <Typography className={classes.priority}>
+                            Priority : {project.priority}
                           </Typography>
                         </Grid>
                         <Grid item container xs={4} md={12} lg={4}>
                           <Typography className={classes.deadlineLabel}>
                             Deadline :
                           </Typography>
-
-                          <Typography className={classes.deadline}>
-                            {project.deadline.slice(0, 34)}
+                          <Typography
+                            style={{ fontSize: "13px", marginLeft: "3px" }}
+                          >
+                            {project.deadline}
                           </Typography>
-                          <Typography className={classes.deadline}>
+                          {/* <Typography className={classes.deadline}>
                             {project.deadline.slice(34)}
-                          </Typography>
+                          </Typography> */}
                         </Grid>
-                        <Grid item container xs={4} md={12} lg={4}>
-                          <Typography className={classes.priority}>
-                            Priority : {project.priority}
-                          </Typography>
-                        </Grid>
+
                         <Grid item container xs={4} md={12} lg={4}>
                           <Typography className={classes.robots}>
                             Robots assigned : {project.assignedRobots.length}
                           </Typography>
+                        </Grid>
+                        <Grid item container xs={4} md={12} lg={4}>
+                          <Button
+                            style={
+                              project.completed
+                                ? { border: "thick double blue" }
+                                : {}
+                            }
+                            onClick={() => {
+                              handleCompletedChange(project._id);
+                            }}
+                          >
+                            <Typography className={classes.completed}>
+                              Completed : {project.completed ? "Yes" : "No"}
+                            </Typography>
+                          </Button>
                         </Grid>
                       </Grid>
                       <Grid
@@ -181,8 +202,8 @@ const ProjectsTable = ({
                                 color="primary"
                                 onClick={() => {
                                   setCurrentId(project._id);
-                                  // console.log(robot._id);
                                   handleTransferClickOpen();
+                                  // console.log(robot._id);
                                 }}
                               >
                                 <FolderSharedIcon />
@@ -194,7 +215,7 @@ const ProjectsTable = ({
                                 onClick={() => {
                                   setCurrentId(project._id);
                                   handleClickOpen();
-                                  console.log("on click event");
+                                  // console.log("on click event");
                                 }}
                               >
                                 <EditIcon />

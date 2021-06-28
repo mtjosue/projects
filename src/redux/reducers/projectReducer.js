@@ -14,6 +14,7 @@ import {
   SET_ASSIGNED_ROBOTS,
   SET_ROBOT_TO_PROJECTS,
   DELETE_ROBOT_FROM_PROJECTS,
+  CHANGE_COMPLETED,
 } from "../action-types/project.types";
 
 // setup initial state, this way we have a state after charging stuff.
@@ -117,6 +118,16 @@ export const projectReducer = (state = initialState, action) => {
       // return;
 
       return { ...state, projects: projectsWithoutRobot };
+    //-------------------------------------------------------------------------------------------
+    case CHANGE_COMPLETED:
+      const updatedProjectsCompleted = [...state.projects].map((project) => {
+        if (action.payload._id === project._id) {
+          return action.payload;
+        } else {
+          return project;
+        }
+      });
+      return { ...state, projects: updatedProjectsCompleted };
     //-------------------------------------------------------------------------------------------
     case PROJECT_CREATE:
       // make a copy of state by spreading the state object in a new object.

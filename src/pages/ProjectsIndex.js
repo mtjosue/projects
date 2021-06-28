@@ -18,6 +18,7 @@ const ProjectsIndex = () => {
 
   const handleClickClose = () => {
     setOpen(false);
+    setCurrentId(0);
   };
 
   const handleTransferClickOpen = () => {
@@ -26,6 +27,7 @@ const ProjectsIndex = () => {
 
   const handleTransferClickClose = () => {
     setOpenTransfer(false);
+    setCurrentId(0);
   };
 
   return (

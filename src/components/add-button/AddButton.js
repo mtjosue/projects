@@ -20,8 +20,8 @@ const AddButton = ({ text, handleClickOpen, setCurrentId }) => {
         className={classes.button}
         startIcon={<AddIcon />}
         onClick={() => {
-          handleClickOpen();
           setCurrentId(0);
+          handleClickOpen();
         }}
       >
         {text}

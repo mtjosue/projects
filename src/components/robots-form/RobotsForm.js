@@ -53,9 +53,14 @@ const RobotsForm = ({ open, handleClickClose, currentId, setCurrentId }) => {
 
   const [robotData, setRobotData] = useState(initialState);
 
+  // if (currentId !== 0) {
   const robotDetails = useSelector(({ robots }) =>
-    currentId ? robots.robots.find((robot) => robot._id === currentId) : ""
+    currentId !== 0
+      ? robots.robots.find((robot) => robot._id === currentId)
+      : null
   );
+  // return robotDetails;
+  // }
 
   // console.log(robotDetails);
 
@@ -85,7 +90,10 @@ const RobotsForm = ({ open, handleClickClose, currentId, setCurrentId }) => {
   return (
     <Dialog
       open={open}
-      onClose={handleClickClose}
+      onClose={() => {
+        handleClickClose();
+        clearRobotData();
+      }}
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle id="form-dialog-title">Robot Details</DialogTitle>

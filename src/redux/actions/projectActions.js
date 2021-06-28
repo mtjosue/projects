@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import {
   PROJECT_CREATE,
   PROJECT_DELETE,
   PROJECT_UPDATE,
   SET_PROJECTS,
   SET_ASSIGNED_ROBOTS,
+  CHANGE_COMPLETED,
   // SET_ROBOT_TO_PROJECTS,
   // SET_PROJECT_TO_ROBOTS,
 } from "../action-types/project.types";
@@ -32,6 +33,11 @@ export const updateProjectOnRobots = (data) => ({
 
 export const deleteProjectFromRight = (data) => ({
   type: DELETE_PROJECT_FROM_ROBOTS,
+  payload: data,
+});
+
+export const handleChangeCompleted = (data) => ({
+  type: CHANGE_COMPLETED,
   payload: data,
 });
 
@@ -118,15 +124,19 @@ export const unassignProjectFromRobots = (id, robots) => async (dispatch) => {
   //
 };
 //
-// export const assignRobotToAllProjects = (id, projects) => async (dispatch) => {
-//   try {
-//     const { data } = await axios.put(`/robots/${id}/project`, projects);
 
-//     console.log("---------------------------------------------------");
-//     console.log("{ data } line(81) : ".toUpperCase(), data);
-
-//     dispatch(updateRobotsOnProjects(data));
-//   } catch (error) {
-//     console.log("assignRobotToProjects ERROR : ", error);
-//   }
-// };
+export const changeCompleted = (id) => async (dispatch) => {
+  //
+  try {
+    //
+    const { data } = await axios.put(`/projects/${id}/completed`);
+    //
+    dispatch(handleChangeCompleted(data));
+    //
+  } catch (error) {
+    //
+    console.log("ERROR line 138 : ", error);
+    //
+  }
+  //
+};

@@ -144,7 +144,7 @@ const RobotsTransferListExample = ({
       }
     });
 
-  const func = filteredProjects();
+  // const func = filteredProjects();
 
   // console.log("line 149 filteredRobots : ".toUpperCase(), func);///////////////////////////////
 
@@ -219,10 +219,6 @@ const RobotsTransferListExample = ({
     //
   };
 
-  const handleSubmit2 = () => {
-    // dispatch(unassignRobotFromProjects(currentId, right));
-  };
-
   //-------------------------------------------------------------------------------------------------------
 
   const customList = (items) => (
@@ -254,13 +250,20 @@ const RobotsTransferListExample = ({
       </List>
     </Paper>
   );
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   return (
     <Dialog
       open={open}
       onClose={() => {
         handleSubmit();
         handleTransferClickClose();
-        handleSubmit2();
       }}
       aria-labelledby="form-dialog-title"
       fullWidth

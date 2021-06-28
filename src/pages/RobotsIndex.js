@@ -12,10 +12,12 @@ const RobotsIndex = () => {
 
   const handleClickOpen = () => {
     setOpen(true);
+    // setCurrentId(0);
   };
 
   const handleClickClose = () => {
     setOpen(false);
+    setCurrentId(0);
   };
 
   const handleTransferClickOpen = () => {
@@ -24,6 +26,7 @@ const RobotsIndex = () => {
 
   const handleTransferClickClose = () => {
     setOpenExampleTransfer(false);
+    setCurrentId(0);
   };
 
   return (
@@ -60,7 +63,6 @@ const RobotsIndex = () => {
           open={openExampleTransfer}
           handleTransferClickClose={handleTransferClickClose}
           currentId={currentId}
-          setCurrentId={setCurrentId}
         />
       )}
     </div>
