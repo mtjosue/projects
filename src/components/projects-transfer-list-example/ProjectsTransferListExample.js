@@ -17,7 +17,11 @@ import {
   // Button,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { assignAllRobotsToProject } from "../../redux/actions/projectActions";
+import {
+  assignAllRobotsToProject,
+  assignProjectToAllRobots,
+  unassignProjectFromRobots,
+} from "../../redux/actions/projectActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -160,7 +164,12 @@ const ProjectsTransferListExample = ({
   // import { assignAllRobotsToProject } from "../../redux/actions/projectActions";
 
   const handleSubmit = () => {
+    //
     dispatch(assignAllRobotsToProject(currentId, left));
+    //
+    dispatch(assignProjectToAllRobots(currentId, left));
+    //
+    dispatch(unassignProjectFromRobots(currentId, right));
   };
 
   //-------------------------------------------------------------------------------------------------------
@@ -204,6 +213,24 @@ const ProjectsTransferListExample = ({
       aria-labelledby="form-dialog-title"
       fullWidth
     >
+      <DialogTitle
+        aria-labelledby="form-dialog-title"
+        style={{ textAlign: "center" }}
+      >
+        Project - Robot Assignment
+      </DialogTitle>
+      <DialogContentText style={{ textAlign: "center" }}>
+        Assign robots to this project from here.
+      </DialogContentText>
+      <Grid container>
+        <Grid item md={6} style={{ textAlign: "center", fontWeight: "bold" }}>
+          {selectedProject && selectedProject.title}
+        </Grid>
+        {/* <Grid item md={0}></Grid> */}
+        <Grid item md={6} style={{ textAlign: "center", fontWeight: "bold" }}>
+          Robots
+        </Grid>
+      </Grid>
       <DialogContent style={{ height: "500px" }}>
         <Grid
           container

@@ -4,6 +4,8 @@ import {
   ROBOT_UPDATE,
   SET_ROBOTS,
   SET_ASSIGNED_PROJECTS,
+  SET_PROJECT_TO_ROBOTS,
+  DELETE_PROJECT_FROM_ROBOTS,
 } from "../action-types/robot.types";
 
 // setup initial state, this way we have a state after charging stuff.
@@ -27,6 +29,57 @@ export const robotReducer = (state = initialState, action) => {
         }
       });
       return { ...state, robots: updatedRobotProjects };
+    //
+    case SET_PROJECT_TO_ROBOTS:
+      //
+      const newRobots = [...state.robots].map((robot) => {
+        //
+        // console.log("line 61 project : ".toUpperCase(), project);///////////////////////////////////
+        //
+        if (action.payload.findIndex((r) => r._id === robot._id) !== -1) {
+          //
+          const newRobot = action.payload.find((r) => r._id === robot._id);
+          //
+          return newRobot;
+          //
+        } else {
+          //
+          return robot;
+        }
+        //
+      });
+      //----------------------------------------------------------------------------------------
+      // console.log("newProjects line(68) : ", newProjects);
+      //----------------------------------------------------------------------------------------
+      return { ...state, robots: [...newRobots] };
+    //
+    case DELETE_PROJECT_FROM_ROBOTS:
+      //
+      const robotsWithoutProject = [...state.robots].map((robot) => {
+        //
+        if (action.payload.findIndex((r) => r.name === robot.name) > -1) {
+          //
+          return action.payload.find((r) => r.name === robot.name);
+          //
+        } else {
+          //
+          return robot;
+          //
+        }
+        //
+      });
+      //
+      // console.log(
+      //   "line 90 projectsWithoutRobot : ".toUpperCase(),////////////////////////////////////////////////////////
+      //   projectsWithoutRobot
+      // );
+      //
+      // return;
+
+      return { ...state, robots: robotsWithoutProject };
+    //
+    // return;
+    //
     case ROBOT_CREATE:
       // make a copy of state by spreading the state object in a new object.
       // select a key, in this case robots and equal that keys value to

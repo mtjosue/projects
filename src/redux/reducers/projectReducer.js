@@ -28,26 +28,40 @@ export const projectReducer = (state = initialState, action) => {
   //
 
   switch (action.type) {
+    //
     case SET_PROJECTS:
       // make a copy of the object(spreading it), modify robots inside the copy.
       const objetifiedProjects = {};
+      //
       action.payload.forEach(
         (project) => (objetifiedProjects[project._id] = project)
       );
-
+      //
       return {
         ...state,
         projects: action.payload,
         projectsObj: objetifiedProjects,
       };
+    //
     case SET_ASSIGNED_ROBOTS:
+      //
+      console.log("line 48 action.payload : ".toUpperCase(), action.payload);
+      //
       const updatedProjecRobots = [...state.projects].map((project) => {
+        //
         if (project._id === action.payload._id) {
+          //
           return action.payload;
+          //
         } else {
+          //
           return project;
+          //
         }
+        //
       });
+      //
+
       return { ...state, projects: updatedProjecRobots };
 
     //------------------------------------------------------------------------------------------

@@ -79,6 +79,8 @@ export const updateRobot = (id, form) => async (dispatch) => {
   }
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////
+
 export const assignAllProjectsToRobot = (id, projects) => async (dispatch) => {
   try {
     //                               `calls updateAllProjectsOnRobot()`

@@ -6,8 +6,13 @@ import {
   PROJECT_UPDATE,
   SET_PROJECTS,
   SET_ASSIGNED_ROBOTS,
-  SET_ROBOT_TO_PROJECTS,
+  // SET_ROBOT_TO_PROJECTS,
+  // SET_PROJECT_TO_ROBOTS,
 } from "../action-types/project.types";
+import {
+  SET_PROJECT_TO_ROBOTS,
+  DELETE_PROJECT_FROM_ROBOTS,
+} from "../action-types/robot.types";
 
 // action creators
 export const getAllProjects = (projects) => ({
@@ -18,6 +23,16 @@ export const getAllProjects = (projects) => ({
 export const updateProjectRobots = (updatedRobots) => ({
   type: SET_ASSIGNED_ROBOTS,
   payload: updatedRobots,
+});
+
+export const updateProjectOnRobots = (data) => ({
+  type: SET_PROJECT_TO_ROBOTS,
+  payload: data,
+});
+
+export const deleteProjectFromRight = (data) => ({
+  type: DELETE_PROJECT_FROM_ROBOTS,
+  payload: data,
 });
 
 // thunks
@@ -58,16 +73,51 @@ export const updateProject = (id, form) => async (dispatch) => {
   }
 };
 
+//////////////////////////////////////////////////////////
 export const assignAllRobotsToProject = (id, robots) => async (dispatch) => {
   try {
     const { data } = await axios.put(`/projects/${id}/robots`, robots);
-    // console.log("Data destructured from the put request : ", data);
+    //
+    console.log("line 65 data : ".toUpperCase(), data);
+    //
     dispatch(updateProjectRobots(data));
+    //
   } catch (error) {
+    //
     console.log("The error : ", error);
+    //
   }
 };
 
+export const assignProjectToAllRobots = (id, robots) => async (dispatch) => {
+  try {
+    //
+    const { data } = await axios.put(`projects/${id}/robot`, robots);
+    //
+    console.log("line 82 data : ".toUpperCase(), data);
+    //
+    dispatch(updateProjectOnRobots(data));
+    //
+  } catch (error) {
+    console.log("ERROR :::", error);
+  }
+};
+//
+export const unassignProjectFromRobots = (id, robots) => async (dispatch) => {
+  //
+  try {
+    const { data } = await axios.put(`/projects/${id}/deleteProject`, robots);
+    //
+    dispatch(deleteProjectFromRight(data));
+    //
+  } catch (error) {
+    //
+    console.log("ERROR UNASSIGNPROJECTFROMROBOT : ", error);
+    //
+  }
+  //
+};
+//
 // export const assignRobotToAllProjects = (id, projects) => async (dispatch) => {
 //   try {
 //     const { data } = await axios.put(`/robots/${id}/project`, projects);
